@@ -3,7 +3,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setUser } from "../../store/Slices/userSlice";
+import { setUser, serFollowers, setFollowings, setPosts, setNotifications } from "../../store/Slices/userSlice";
 import { login } from "../../services/auth";
 import { getUserById, getUserFollowers, getUserFollowings, getUserPosts, getUserNotifications } from "../../services/user";
 
@@ -23,10 +23,10 @@ export default function Login() {
             const userFollowings = await getUserFollowings(data);
             const userPosts = await getUserPosts(data);
             const userNotifications = await getUserNotifications(data);
-            console.log(userFollowers);
-            console.log(userFollowings);
-            console.log(userPosts);
-            console.log(userNotifications);
+            dispatch(serFollowers(userFollowers));
+            dispatch(setFollowings(userFollowings));
+            dispatch(setPosts(userPosts));
+            dispatch(setNotifications(userNotifications));
             dispatch(setUser(user[0]));
             navigate("/dashboard");
         } catch (error) {
