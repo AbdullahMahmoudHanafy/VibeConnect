@@ -20,6 +20,7 @@ export default function Login() {
             const data = await login(email, password);
             const user = await getUserById(data);
             dispatch(setUser(user[0]));
+            navigate("/dashboard");
         } catch (error) {
             console.log(error);
         }
