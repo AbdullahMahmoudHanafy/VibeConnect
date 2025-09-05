@@ -2,13 +2,21 @@ from fastapi import FastAPI, HTTPException
 import mysql.connector
 app = FastAPI()
 
+from fastapi.middleware.cors import CORSMiddleware
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # React dev server
+    allow_credentials=True,
+    allow_methods=["*"],  # or restrict ["GET", "POST"]
+    allow_headers=["*"],
+)
 
 
 def GetNewID(table_name, where="", id='id'):
     connection = mysql.connector.connect(
         user="root",
-        password="123@123",
+        password="WJ28@krhps",
         host="localhost",
         database="social_app",
         ssl_disabled=True
@@ -27,7 +35,7 @@ def GetNewID(table_name, where="", id='id'):
 def GetConnection():
         connection = mysql.connector.connect(
             user="root",
-            password="123@123",
+            password="WJ28@krhps",
             host="localhost",
             database="social_app",
             ssl_disabled=True
@@ -671,7 +679,8 @@ def DeleteCommentLike(user_id:int, comment_id:int, comment_user_id:int, post_id:
     finally:
         cursor.close(); connection.close()
 
-from google import genai
+import google.generativeai as genai
+
 @app.post('/send-prompt')
 def SendPrompt(user_id:int, content:str):
     try:
