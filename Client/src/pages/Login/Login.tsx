@@ -3,7 +3,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setUserId } from "../../store/Slices/userSlice";
+import { setUser } from "../../store/Slices/userSlice";
 import { login } from "../../services/auth";
 import { getUserById } from "../../services/user";
 
@@ -16,13 +16,10 @@ export default function Login() {
 
     async function handleLogin(e: React.FormEvent) {
         e.preventDefault();
-
         try {
             const data = await login(email, password);
-            dispatch(setUserId(data));
-
             const user = await getUserById(data);
-            console.log("User details:", user);
+            dispatch(setUser(user[0]));
         } catch (error) {
             console.log(error);
         }

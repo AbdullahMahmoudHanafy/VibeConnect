@@ -2,26 +2,33 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
+interface User {
+  id: string;
+  email: string;
+  name: string;
+  // add other fields your backend returns
+}
+
 interface UserState {
-  userId: string | null;
+  user: User | null;
 }
 
 const initialState: UserState = {
-  userId: null,
+  user: null,
 };
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setUserId: (state, action: PayloadAction<string>) => {
-      state.userId = action.payload;
+    setUser(state, action: PayloadAction<User>) {
+      state.user = action.payload;
     },
-    clearUser: (state) => {
-      state.userId = null;
+    clearUser(state) {
+      state.user = null;
     },
   },
 });
 
-export const { setUserId, clearUser } = userSlice.actions;
+export const { setUser, clearUser } = userSlice.actions;
 export default userSlice.reducer;
