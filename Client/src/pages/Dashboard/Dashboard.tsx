@@ -1,6 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { logOut } from "../../store/Slices/userSlice";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 export default function Dashboard() {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const personalCommunicationDetails = {
         "Followers": 123,
         "Following": 456,
@@ -14,6 +19,10 @@ export default function Dashboard() {
         {title: "Favorites",subTitle: "Your favorite friends",value: 0},
         {title: "Privacy Policy", subTitle: "Protect your privacy", value: 0}
     ]
+    function handleLogOut() {
+        dispatch(logOut());
+        navigate("/");
+    }
     return (
         <div className="w-screen h-screen flex items-center justify-center">
             <div className="flex flex-col gap-4 w-100 h-auto p-4 border border-gray-300 rounded-md">
@@ -56,7 +65,7 @@ export default function Dashboard() {
                         )
                     }
                 </div>
-                <button className="w-full bg-green-100 h-14 text-green-500 rounded-md hover:bg-green-200 cursor-pointer">Log Out</button>
+                <button className="w-full bg-green-100 h-14 text-green-500 rounded-md hover:bg-green-200 cursor-pointer" onClick={handleLogOut}>Log Out</button>
             </div>
         </div>
     )
