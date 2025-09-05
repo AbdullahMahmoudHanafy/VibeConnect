@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUserId } from "../../store/Slices/userSlice";
+import { login } from "../../services/auth";
+import { getUserById } from "../../services/user";
 
 
 export default function Login() {
@@ -16,19 +18,11 @@ export default function Login() {
         e.preventDefault();
 
         try {
-            const res = await fetch(`http://127.0.0.1:8000/sign-in?email=${email}&password=${password}`, {
-                method: "GET"
-            });
+            const data = await login(email, password);
+            dispatch(setUserId(data));
 
-            if (!res.ok) throw new Error("Login failed");
-            const data = await res.json();
-
-            // store in redux
-            dispatch(setUserId(data.userId));
-
-            console.log(data);
-
-            console.log("Login successful!", data);
+            const user = await getUserById(data);
+            console.log("User details:", user);
         } catch (error) {
             console.log(error);
         }
