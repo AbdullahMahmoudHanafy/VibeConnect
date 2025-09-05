@@ -2,17 +2,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { logOut } from "../../store/Slices/userSlice";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "../../store/store";
 export default function Dashboard() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const user = useSelector((state: RootState) => state.user.user);
+    const followers = useSelector((state: RootState) => state.user.followers);
+    const followings = useSelector((state: RootState) => state.user.followings);
+    const posts = useSelector((state: RootState) => state.user.posts);
+    const notifications = useSelector((state: RootState) => state.user.notifications);
+
+    console.log(followers)
     const personalCommunicationDetails = {
-        "Followers": 123,
-        "Following": 456,
-        "Posts": 78
-    }
+        "Followers": followers?.length ?? 0,
+        "Following": followings?.length ?? 0,
+        "Posts": posts?.length ?? 0
+    };
+
     const NavigationList = [
-        {title: "Notifications",subTitle: "See your recent activity",value: 35},
+        {title: "Notifications",subTitle: "See your recent activity",value: notifications?.length ?? 0},
         {title: "Messages",subTitle: "Message your friends",value: 20},
         {title: "Friends",subTitle: "Friend List",value: 0},
         {title: "Albums",subTitle: "Save or post your albums",value: 0},
@@ -29,8 +38,8 @@ export default function Dashboard() {
                 <div className="flex flex-row items-center justify-between w-full">
                     <button className="h-14 w-14 rounded-full"><img className="h-full w-full rounded-full" src="https://th.bing.com/th/id/R.7758e170f89da780877fc5225f816925?rik=yIu8z%2bhf5A46mA&riu=http%3a%2f%2fcelebrityinsider.org%2fwp-content%2fuploads%2f2019%2f04%2ftom-cruise.jpg&ehk=p0qLC3YZvXfJ3Ky6ljm%2f0ltpasGMFAbOHF7e2Uf%2fiRw%3d&risl=&pid=ImgRaw&r=0" alt="" /></button>
                     <div className="flex flex-col w-8/12">
-                        <p className="font-bold">Jhon</p>
-                        <p className="text-gray-500 text-sm">@Jhon</p>
+                        <p className="font-bold">{user?.name ?? "Jhon Doe"}</p>
+                        <p className="text-gray-500 text-sm">@{user?.name ?? "jhondoe"}</p>
                     </div>
                     <button className="h-8 w-8 rounded-full border border-gray-300 hover:bg-gray-100 cursor-pointer"><FontAwesomeIcon icon={faAngleRight} /></button>
                 </div>
