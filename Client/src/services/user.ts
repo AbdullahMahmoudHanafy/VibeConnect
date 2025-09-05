@@ -9,3 +9,9 @@ export async function getUserFollowers(userId: number) {
     if (!res.ok) throw new Error("Failed to fetch followers");
     return res.json();
 }
+
+export async function getUserFollowings(userId: number) {
+    const res = await fetch(`http://127.0.0.1:8000/get-followings?user_id=${userId}`);
+    if (!res.ok) throw new Error("Failed to fetch followings");
+    return res.json();
+}
