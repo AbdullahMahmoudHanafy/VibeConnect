@@ -15,3 +15,9 @@ export async function getUserFollowings(userId: number) {
     if (!res.ok) throw new Error("Failed to fetch followings");
     return res.json();
 }
+
+export async function getUserPosts(userId: number) {
+    const res = await fetch(`http://127.0.0.1:8000/get-user-posts?user_id=${userId}`);
+    if (!res.ok) throw new Error("Failed to fetch posts");
+    return res.json();
+}
