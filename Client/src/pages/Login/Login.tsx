@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../store/Slices/userSlice";
 import { login } from "../../services/auth";
-import { getUserById } from "../../services/user";
+import { getUserById, getUserFollowers, getUserFollowings, getUserPosts, getUserNotifications } from "../../services/user";
 
 
 export default function Login() {
@@ -19,6 +19,14 @@ export default function Login() {
         try {
             const data = await login(email, password);
             const user = await getUserById(data);
+            const userFollowers = await getUserFollowers(data);
+            const userFollowings = await getUserFollowings(data);
+            const userPosts = await getUserPosts(data);
+            const userNotifications = await getUserNotifications(data);
+            console.log(userFollowers);
+            console.log(userFollowings);
+            console.log(userPosts);
+            console.log(userNotifications);
             dispatch(setUser(user[0]));
             navigate("/dashboard");
         } catch (error) {

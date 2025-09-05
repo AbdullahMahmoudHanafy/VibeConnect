@@ -29,19 +29,19 @@ export default function Dashboard() {
                 <div className="flex flex-row items-center justify-between">
                     {
                         Object.entries(personalCommunicationDetails).map(([key, value]) => (
-                            <button key={key} className="flex flex-col items-center justify-center w-20 h-20 border border-gray-300 rounded-md hover:bg-gray-100 cursor-pointer">
+                            <button key={key} className="flex flex-col items-center justify-center w-25 h-20 border border-gray-300 rounded-md hover:bg-gray-100 cursor-pointer">
                                 <p className="font-bold text-xl">{value}</p>
                                 <p className="text-gray-500 text-sm">{key}</p>
                             </button>
                         ))
                     }
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col gap-2 w-full">
                     {
                         NavigationList.map((item, index) => { 
                             const isLastItem = index === NavigationList.length - 1;
                             return (
-                                <div>
+                                <div key={item.title} className="w-full">
                                     {isLastItem && <hr className="mb-4 text-gray-300"/>}
                                     <div key={item.title} className={`flex flex-row items-center justify-between w-full py-3 rounded-md ${!isLastItem && "cursor-pointer"} `}>
                                         <div className="w-9/12">

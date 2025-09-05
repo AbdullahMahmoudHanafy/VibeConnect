@@ -22,8 +22,20 @@ export async function getUserPosts(userId: number) {
     return res.json();
 }
 
-export async function getUserNotifications(userId: number) {
+export async function getUserNotifications(userId: string) {
+  try {
     const res = await fetch(`http://127.0.0.1:8000/get-notifications?user_id=${userId}`);
-    if (!res.ok) throw new Error("Failed to fetch notifications");
-    return res.json();
+    
+    if (!res.ok) {
+      // interpret 400/500 as "no notifications"
+      console.warn("No notifications found");
+      return [];
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.error("Error fetching notifications:", err);
+    return []; // fallback to empty
+  }
 }
