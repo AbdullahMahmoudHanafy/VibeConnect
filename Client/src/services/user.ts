@@ -39,3 +39,29 @@ export async function getUserNotifications(userId: string) {
     return []; // fallback to empty
   }
 }
+
+export async function followUser(sender_id: number, receiver_id: number) {
+  try {
+      const res = await fetch(`http://127.0.0.1:8000/follow?sender_id=${sender_id}&receiver_id=${receiver_id}`, {
+      method: "POST"
+    })
+    if (!res.ok) {
+      throw new Error("Failed to follow user");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function unFollowUser(sender_id: number, receiver_id: number) {
+  try {
+      const res = await fetch(`http://127.0.0.1:8000/unfollow?sender_id=${sender_id}&receiver_id=${receiver_id}`, {
+      method: "DELETE"
+    })
+    if (!res.ok) {
+      throw new Error("Failed to follow user");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}

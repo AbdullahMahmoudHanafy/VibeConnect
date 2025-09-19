@@ -1,66 +1,76 @@
 // src/pages/Profile.tsx
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "../../store/store";
-import { getUserById, getUserFollowers, getUserFollowings, getUserPosts } from "../../services/user";
+import { getUserById, getUserFollowers, getUserFollowings, getUserPosts, followUser, unFollowUser } from "../../services/user";
+import { setFollowings} from "../../store/Slices/userSlice";
 
 export default function Profile() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userId } = useParams<{ userId?: string }>();
 
   const [user, setUser] = useState<any | null>(null);
-  const [followers, setFollowers] = useState<any[]>([]);
-  const [followings, setFollowings] = useState<any[]>([]);
+  const [followers, setUserFollowers] = useState<any[]>([]);
+  const [followings, setUserFollowings] = useState<any[]>([]);
   const [posts, setPosts] = useState<any[]>([]);
 
   const currUser = useSelector((state: RootState) => state.user.user);
-  const currUserFollowings = useSelector((state: RootState) => state.user.followings);
 
-  useEffect(() => {
-    let mounted = true;
-    async function fetchProfile() {
-      try {
-        if (!userId) {
-          if (mounted) {
-            setUser(null);
-            setFollowers([]);
-            setFollowings([]);
-            setPosts([]);
-          }
-          return;
-        }
-
-        const id = Number(userId);
-
-        const [u, f, fo, p] = await Promise.all([
-          getUserById(id),
-          getUserFollowers(id),
-          getUserFollowings(id),
-          getUserPosts(id)
-        ]);
-
-        if (!mounted) return;
-
-        setUser(u?.[0] ?? null);
-        setFollowers(f ?? []);
-        setFollowings(fo ?? []);
-        setPosts(p ?? []);
-      } catch (e) {
-        console.error("Profile load error:", e);
-      }
+  const fetchProfile = useCallback(async () => {
+    if (!userId) {
+      setUser(null);
+      setUserFollowers([]);
+      setUserFollowings([]);
+      setPosts([]);
+      return;
     }
 
-    fetchProfile();
-    return () => { mounted = false; };
+    try {
+      const id = Number(userId);
+      const [u, f, fo, p] = await Promise.all([
+        getUserById(id),
+        getUserFollowers(id),
+        getUserFollowings(id),
+        getUserPosts(id),
+      ]);
+
+      setUser(u?.[0] ?? null);
+      setUserFollowers(f ?? []);
+      setUserFollowings(fo ?? []);
+      setPosts(p ?? []);
+    } catch (e) {
+      console.error("Profile load error:", e);
+    }
   }, [userId]);
+
+  useEffect(() => {
+    fetchProfile();
+  }, [fetchProfile]);
+
+  async function handleFollowToggle() {
+    if (!currUser || !user) return;
+    try {
+      if (isFollowingProfile) {
+        await unFollowUser(currUser.id, user.id)
+      } else {
+        await followUser(currUser.id, user.id);
+      }
+      const updatedFollowings = await getUserFollowings(currUser.id);
+      dispatch(setFollowings(updatedFollowings));
+      await fetchProfile()
+    } catch (e) {
+      console.error("Follow/Unfollow error:", e);
+    }
+  }
 
   const profileId = Number(userId);
   const isCurrentUser = !!currUser && currUser.id === profileId;
-  const isFollowingProfile = !!currUserFollowings && currUserFollowings.some((f: any) => f.following_id === profileId);
+  const isFollowingProfile = followers.some(f => f.follower_id === currUser?.id);
 
   return (
     <div className="w-screen h-full flex items-center justify-center mt-20">
@@ -99,6 +109,7 @@ export default function Profile() {
           <div className="flex flex-row items-center justify-center gap-2 my-5">
             <button className="h-8 px-4 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-full cursor-pointer">Message</button>
             <button
+            onClick={handleFollowToggle}
               className={`h-8 px-4 rounded-full cursor-pointer ${isFollowingProfile ? "bg-gray-300 text-gray-700 hover:bg-gray-400" : "bg-green-400 text-white hover:bg-green-500"}`}
             >
               {isFollowingProfile ? "Following" : "Follow"}

@@ -29,7 +29,7 @@ export default function FollowersPage() {
             <div className="flex flex-col gap-4 w-100 h-auto p-4 rounded-md">
                 <div className="flex flex-row items-center justify-start h-auto gap-4">
                     <div className="w-auto h-full flex items-center justify-center" onClick={() => navigate("/dashboard")}><button className="h-12 w-12 flex items-center justify-center bg-green-400 rounded-md hover:bg-green-500 cursor-pointer"><FontAwesomeIcon icon={faArrowLeft} className="text-white"/></button></div>
-                    <p className="text-start">Followers {followersIds?.length}</p>
+                    <p className="text-start font-bold text-xl">Followers ({followersIds?.length})</p>
                 </div>
                 <hr />
                 {
