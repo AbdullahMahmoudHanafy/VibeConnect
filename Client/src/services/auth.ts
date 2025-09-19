@@ -14,6 +14,7 @@ export async function login(email: string, password: string) {
 }
 
 export async function signUp(name: string, email: string, password: string) {
+    console.log(name, email, password);
     try {
         const res = await fetch(`http://127.0.0.1:8000/sign-up?name=${name}&email=${email}&password=${password}`, {
             method: "POST"

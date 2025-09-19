@@ -31,22 +31,22 @@ def GetNewID(table_name, where="", id='id'):
     cursor.close(); connection.close()
 
     return max_id + 1
-        
+
 def GetConnection():
-        try:
-            connection = mysql.connector.connect(
-                user="root",
-                password="WJ28@krhps",
-                host="localhost",
-                database="social_app",
-                ssl_disabled=True
-            )
-            cursor = connection.cursor()
-            print("✅ Database connected successfully")
-        except mysql.connector.Error as e:
-            print("❌ Database connection failed:", e)
-        
-        return connection, cursor
+    try:
+        connection = mysql.connector.connect(
+            user="root",
+            password="WJ28@krhps",
+            host="localhost",
+            database="social_app",
+            ssl_disabled=True
+        )
+        cursor = connection.cursor(dictionary=True)  # ✅ dictionary mode
+        print("✅ Database connected successfully")
+    except mysql.connector.Error as e:
+        print("❌ Database connection failed:", e)
+        raise
+    return connection, cursor
 
 # base url
 @app.get('/')

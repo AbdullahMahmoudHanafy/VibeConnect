@@ -10,13 +10,11 @@ export interface User {
 }
 
 export interface Follower {
-  id: number;
-  name: string;
+  follower_id: number;
 }
 
 export interface Following {
-  id: number;
-  name: string;
+  following_id: number;
 }
 
 export interface Post {
@@ -54,7 +52,7 @@ const userSlice = createSlice({
     setUser(state, action: PayloadAction<User>) {
       state.user = action.payload;
     },
-    serFollowers(state, action: PayloadAction<Follower[]>) {
+    setFollowers(state, action: PayloadAction<Follower[]>) {
       state.followers = action.payload;
     },
     setFollowings(state, action: PayloadAction<Following[]>) {
@@ -76,5 +74,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUser, serFollowers, setFollowings, setPosts, setNotifications, logOut } = userSlice.actions;
+export const { setUser, setFollowers, setFollowings, setPosts, setNotifications, logOut } = userSlice.actions;
 export default userSlice.reducer;
