@@ -47,7 +47,7 @@ export default function Login() {
                 <p className="text-gray-500">Or with</p>
                 <button className="w-full rounded-md border border-gray-300 h-12 hover:border-gray-500 hover:bg-gray-50 cursor-pointer">Sign in with google</button>
                 <button className="w-full rounded-md border border-gray-300 h-12 hover:border-gray-500 hover:bg-gray-50 cursor-pointer">Sign in with tweeter</button>
-                <p className="text-gray-500 mt-6">Don't have an account?, let's <a href="" className="text-green-500">Sign Up</a></p>
+                <p className="text-gray-500 mt-6">Don't have an account?, let's <a href="http://localhost:5173/sign-up" className="text-green-500">Sign Up</a></p>
             </div>
         </div>
     )

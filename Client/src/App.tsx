@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Landing from "./pages/Landing/Landing";
 import Login from "./pages/Login/Login";
 import Dashboard from "./pages/Dashboard/Dashboard";
+import SignUp from "./pages/Sign-up/Sign-up";
 
 function App() {
   return (
@@ -9,7 +10,7 @@ function App() {
       <Route path="/" element={<Landing />} />
       <Route path="/login" element={<Login />} />
       <Route path="/dashboard" element={<Dashboard />} />
-      {/* Later you can add: <Route path="/chat" element={<Chat />} /> */}
+      <Route path="/sign-up" element={<SignUp />} />
     </Routes>
   );
 }
