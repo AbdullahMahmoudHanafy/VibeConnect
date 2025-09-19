@@ -13,7 +13,6 @@ export default function Dashboard() {
     const posts = useSelector((state: RootState) => state.user.posts);
     const notifications = useSelector((state: RootState) => state.user.notifications);
 
-    console.log(followers)
     const personalCommunicationDetails = {
         "Followers": followers?.length ?? 0,
         "Following": followings?.length ?? 0,
