@@ -41,7 +41,7 @@ export default function Dashboard() {
                         <p className="font-bold">{user?.name ?? "Jhon Doe"}</p>
                         <p className="text-gray-500 text-sm">@{user?.name ?? "jhondoe"}</p>
                     </div>
-                    <button className="h-8 w-8 rounded-full border border-gray-300 hover:bg-gray-100 cursor-pointer"><FontAwesomeIcon icon={faAngleRight} /></button>
+                    <button onClick={() => (navigate(`/profile/${user?.id}`))} className="h-8 w-8 rounded-full border border-gray-300 hover:bg-gray-100 cursor-pointer"><FontAwesomeIcon icon={faAngleRight} /></button>
                 </div>
                 <hr className="text-gray-300"/>
                 <div className="flex flex-row items-center justify-between">

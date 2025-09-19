@@ -36,8 +36,8 @@ export default function FollowersPage() {
                     followers?.length != 0 && <div className="flex flex-col gap-4">
                         {followers?.map((follower) => {
                             return (
-                                <div className="flex flex-row items-center justify-start h-auto gap-4">
-                                    <div className="w-30 h-full flex items-center justify-center"><img className="w-12 h-12 rounded-full" src="https://tse2.mm.bing.net/th/id/OIP.QcK8C3zq-RxHOZqTqxGD6wHaFj?rs=1&pid=ImgDetMain&o=7&rm=3" alt="" /></div>
+                                <div key={follower[0].id}className="flex flex-row items-center justify-start h-auto gap-4">
+                                    <div className="w-30 h-full flex items-center justify-center"><img  onClick={() => navigate(`/profile/${follower[0].id}`)} className="w-12 h-12 rounded-full cursor-pointer" src="https://tse2.mm.bing.net/th/id/OIP.QcK8C3zq-RxHOZqTqxGD6wHaFj?rs=1&pid=ImgDetMain&o=7&rm=3" alt="" /></div>
                                     <div className="w-full flex flex-col items-start justify-center">
                                         <p>{follower[0].name}</p>
                                         <p className="text-gray-500">@{follower[0].name}</p>
