@@ -683,42 +683,82 @@ def DeleteCommentLike(user_id:int, comment_id:int, comment_user_id:int, post_id:
     finally:
         cursor.close(); connection.close()
 
+# import google.generativeai as genai
+
+# @app.post('/send-prompt')
+# def SendPrompt(user_id:int, content:str):
+#     try:
+
+#         new_message_id = GetNewID('ai_chats', where=f"WHERE user_id = {user_id}", id='message_id') 
+#         connection, cursor = GetConnection()
+
+#         cursor.execute("INSERT INTO ai_chats values(%s, %s, %s, false);", (user_id, new_message_id, content))
+
+#         connection.commit()
+
+#         client = genai.Client(api_key="AIzaSyBNmRud-BbVedh2vPd6BPvHu4KSfC7rR7o") # to be updated
+
+#         response = client.models.generate_content(
+#             model='models/gemini-2.5-flash',
+#             contents = content
+#         )
+
+#         cursor.execute(
+#             "INSERT INTO ai_chats values (%s,%s,%s, true);",
+#             (user_id, new_message_id + 1, response.text)
+#         )
+#         connection.commit()
+
+#         return {
+#             "response": response.text
+#         }
+    
+#     except mysql.connector.Error as err:
+#         raise HTTPException(status_code=500, detail=f"Database error: {err}")
+#     except Exception as e:
+#         raise HTTPException(status_code=500, detail=str(e))
+#     finally:
+#         cursor.close(); connection.close()
+import os
 import google.generativeai as genai
+
+genai.configure(api_key="AIzaSyBNmRud-BbVedh2vPd6BPvHu4KSfC7rR7o")
 
 @app.post('/send-prompt')
 def SendPrompt(user_id:int, content:str):
     try:
-
-        new_message_id = GetNewID('ai_chats', where=f"WHERE user_id = {user_id}", id='message_id') 
+        new_message_id = GetNewID("ai_chats", where=f"WHERE user_id = {user_id}", id="message_id")
         connection, cursor = GetConnection()
 
+        # Save user message
         cursor.execute("INSERT INTO ai_chats values(%s, %s, %s, false);", (user_id, new_message_id, content))
-
         connection.commit()
 
-        client = genai.Client(api_key="AIzaSyBNmRud-BbVedh2vPd6BPvHu4KSfC7rR7o") # to be updated
+        # Get AI response
+        try:
+            model = genai.GenerativeModel("gemini-1.5-flash")
+            response = model.generate_content(content)
+            reply_text = response.text
+        except Exception as e:
+            reply_text = f"[AI Error]: {str(e)}"
 
-        response = client.models.generate_content(
-            model='models/gemini-2.5-flash',
-            contents = content
-        )
-
+        # Save AI response
         cursor.execute(
             "INSERT INTO ai_chats values (%s,%s,%s, true);",
             (user_id, new_message_id + 1, response.text)
         )
         connection.commit()
 
-        return {
-            "response": response.text
-        }
-    
+        return {"response": reply_text}
+
     except mysql.connector.Error as err:
         raise HTTPException(status_code=500, detail=f"Database error: {err}")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     finally:
-        cursor.close(); connection.close()
+        cursor.close()
+        connection.close()
+
 
 @app.delete('/delete-message')
 def DeleteMessage(user_id:int, message_id:int):

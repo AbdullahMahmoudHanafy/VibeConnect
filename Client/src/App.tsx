@@ -5,6 +5,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import SignUp from "./pages/Sign-up/Sign-up";
 import FollowersPage from "./pages/Followers/Followers";
 import Profile from "./pages/Profile/Profile";
+import Chatting from "./pages/Chatting/Chatting";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/followers" element={<FollowersPage />} />
       <Route path="/profile/:userId" element={<Profile />} />
+      <Route path="/chat/:userId" element={<Chatting />} />
     </Routes>
   );
 }

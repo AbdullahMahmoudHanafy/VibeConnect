@@ -107,7 +107,7 @@ export default function Profile() {
 
         { !isCurrentUser && (
           <div className="flex flex-row items-center justify-center gap-2 my-5">
-            <button className="h-8 px-4 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-full cursor-pointer">Message</button>
+            <button className="h-8 px-4 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-full cursor-pointer" onClick={() => navigate(`/chat/${user?.id}`)}>Message</button>
             <button
             onClick={handleFollowToggle}
               className={`h-8 px-4 rounded-full cursor-pointer ${isFollowingProfile ? "bg-gray-300 text-gray-700 hover:bg-gray-400" : "bg-green-400 text-white hover:bg-green-500"}`}
