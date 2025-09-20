@@ -65,3 +65,19 @@ export async function unFollowUser(sender_id: number, receiver_id: number) {
     console.log(error);
   }
 }
+
+export async function sendMessage(user_id : number, content: string) {
+  try {
+    const res = await fetch(`http://127.0.0.1:8000/send-prompt?user_id=${user_id}&content=${content}`, {
+      method: "POST"
+    })
+    if (!res.ok) {
+      throw new Error("Failed to send message");
+    }
+    const data = await res.json();
+    console.log(data["response"]);
+    return data["response"];
+  } catch (error) {
+    console.log(error);
+  }
+}
