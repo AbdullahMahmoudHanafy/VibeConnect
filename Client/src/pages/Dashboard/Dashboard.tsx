@@ -20,12 +20,12 @@ export default function Dashboard() {
     };
 
     const NavigationList = [
-        {title: "Notifications",subTitle: "See your recent activity",value: notifications?.length ?? 0},
-        {title: "Messages",subTitle: "Message your friends",value: 20},
-        {title: "Friends",subTitle: "Friend List",value: 0},
-        {title: "Albums",subTitle: "Save or post your albums",value: 0},
-        {title: "Favorites",subTitle: "Your favorite friends",value: 0},
-        {title: "Privacy Policy", subTitle: "Protect your privacy", value: 0}
+        {title: "Notifications",subTitle: "See your recent activity",value: notifications?.length ?? 0, link: "/notifications"},
+        {title: "Messages",subTitle: "Message your friends",value: 20, link: "/messages"},
+        {title: "Friends",subTitle: "Friend List",value: 0, link: "/friends"},
+        {title: "Albums",subTitle: "Save or post your albums",value: 0, link: "/albums"},
+        {title: "Favorites",subTitle: "Your favorite friends",value: 0, link: "/favorites"},
+        {title: "Privacy Policy", subTitle: "Protect your privacy", value: 0, link: "/privacy"},
     ]
     function handleLogOut() {
         dispatch(logOut());
@@ -60,7 +60,7 @@ export default function Dashboard() {
                             return (
                                 <div key={item.title} className="w-full">
                                     {isLastItem && <hr className="mb-4 text-gray-300"/>}
-                                    <div key={item.title} className={`flex flex-row items-center justify-between w-full py-3 rounded-md ${!isLastItem && "cursor-pointer"} `}>
+                                    <div onClick={() => navigate(item.link)} key={item.title} className={`flex flex-row items-center justify-between w-full py-3 rounded-md ${!isLastItem && "cursor-pointer"}`}>
                                         <div className="w-9/12">
                                             <p className="font-bold text-lg">{item.title}</p>
                                             <p className="text-gray-500 text-sm">{item.subTitle}</p>

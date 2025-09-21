@@ -6,6 +6,7 @@ import SignUp from "./pages/Sign-up/Sign-up";
 import FollowersPage from "./pages/Followers/Followers";
 import Profile from "./pages/Profile/Profile";
 import Chatting from "./pages/Chatting/Chatting";
+import Notifications from "./pages/Notifications/Notifications";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route path="/followers" element={<FollowersPage />} />
       <Route path="/profile/:userId" element={<Profile />} />
       <Route path="/chat/:userId" element={<Chatting />} />
+      <Route path="/notifications" element={<Notifications />} />
     </Routes>
   );
 }

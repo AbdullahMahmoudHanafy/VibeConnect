@@ -1,4 +1,3 @@
-// userSlice.ts
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
@@ -6,7 +5,6 @@ export interface User {
   id: number;
   name: string;
   email: string;
-  // add other fields your backend returns
 }
 
 export interface Follower {
@@ -25,8 +23,8 @@ export interface Post {
 
 export interface Notification {
   id: number;
-  message: string;
-  createdAt: string;
+  text: string;
+  created_at: string;
 }
 
 interface UserState {
