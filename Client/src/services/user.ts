@@ -81,3 +81,16 @@ export async function sendMessage(user_id : number, content: string) {
     console.log(error);
   }
 }
+
+export async function deleteNotification(notification_id: number) {
+  try {
+    const res = await fetch(`http://127.0.0.1:8000/delete-notification?notification_id=${notification_id}`, {
+      method: "DELETE"
+    })
+    if (!res.ok) {
+      throw new Error("Failed to delete notification");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}

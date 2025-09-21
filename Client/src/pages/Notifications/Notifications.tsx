@@ -4,11 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
 import { useEffect, useState } from "react";
-import { getUserById } from "../../services/user";
+import { getUserById, deleteNotification, getUserNotifications } from "../../services/user";
+import { useDispatch } from "react-redux";
+import { setNotifications } from "../../store/Slices/userSlice";
 
 export default function Notifications() {
     const navigator = useNavigate();
+    const dispatch = useDispatch();
 
+    const currUser = useSelector((state: RootState) => state.user.user);
     const notifications = useSelector((state: RootState) => state.user.notifications);
     const [notifiersNames, setNotifiersNames] = useState<Record<number, string>>({});
 
@@ -26,6 +30,14 @@ export default function Notifications() {
             fetchNotifiersNames();
         }
     }, [notifications]);
+
+    async function handleMarkAsRead(notificationId: number) {
+        deleteNotification(notificationId);
+        if (currUser) {
+            const reponse = await getUserNotifications((currUser.id).toString());
+            dispatch(setNotifications(reponse));
+        }
+    }
     return (
         <div className="w-screen h-full flex items-center justify-center mt-20">
             <div className="flex flex-col w-100 h-auto p-4 rounded-md">
@@ -43,16 +55,16 @@ export default function Notifications() {
                 </div>
                 <div className="flex flex-row items-center justify-between h-auto gap-4 w-100 pt-3 text-gray-400">
                     <p className="cursor-pointer">Show all</p>
-                    <p className="cursor-pointer">Mark all as read</p>
+                    <p className="cursor-pointer" onClick={() => notifications.map((notification) => handleMarkAsRead(notification.id))}>Mark all as read</p>
                 </div>
                 <div className="flex flex-col gap-4 mt-3 w-100 max-h-[60vh] min-h-0">
                     {
                         notifications?.length === 0 && <p className="text-center text-gray-500">No notifications</p>
                     }
                     {
-                        notifications?.length != 0 && notifications.map((notification, index) => 
+                        notifications?.length != 0 && notifications.map((notification) => 
                             <div 
-                                key={index} 
+                                key={notification.id} 
                                 className="relative group w-full h-20 flex-shrink-0"
                                 >
                                 {/* The sliding card */}
@@ -72,7 +84,7 @@ export default function Notifications() {
                                 </div>
 
                                 {/* Button revealed on hover */}
-                                <button 
+                                <button onClick={() => handleMarkAsRead(notification.id)}
                                     className="absolute right-0 top-0 h-20 w-12 bg-green-500 flex items-center justify-center text-white 
                                             opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-md cursor-pointer"
                                 >
