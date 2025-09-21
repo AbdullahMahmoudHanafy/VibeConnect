@@ -33,7 +33,7 @@ export default function Dashboard() {
     }
     return (
         <div className="w-screen h-screen flex items-center justify-center">
-            <div className="flex flex-col gap-4 w-100 h-auto p-4 border border-gray-300 rounded-md">
+            <div className="flex flex-col gap-4 w-100 h-auto p-4 rounded-md">
                 <div className="flex flex-row items-center justify-between w-full">
                     <button className="h-14 w-14 rounded-full"><img className="h-full w-full rounded-full" src="https://th.bing.com/th/id/R.7758e170f89da780877fc5225f816925?rik=yIu8z%2bhf5A46mA&riu=http%3a%2f%2fcelebrityinsider.org%2fwp-content%2fuploads%2f2019%2f04%2ftom-cruise.jpg&ehk=p0qLC3YZvXfJ3Ky6ljm%2f0ltpasGMFAbOHF7e2Uf%2fiRw%3d&risl=&pid=ImgRaw&r=0" alt="" /></button>
                     <div className="flex flex-col w-8/12">
