@@ -75,7 +75,6 @@ export async function sendMessage(user_id : number, content: string) {
       throw new Error("Failed to send message");
     }
     const data = await res.json();
-    console.log(data["response"]);
     return data["response"];
   } catch (error) {
     console.log(error);

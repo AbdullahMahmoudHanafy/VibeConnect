@@ -22,7 +22,7 @@ export default function Dashboard() {
     const NavigationList = [
         {title: "Notifications",subTitle: "See your recent activity",value: notifications?.length ?? 0, link: "/notifications"},
         {title: "Messages",subTitle: "Message your friends",value: 20, link: "/messages"},
-        {title: "Friends",subTitle: "Friend List",value: 0, link: "/friends"},
+        {title: "Timeline",subTitle: "See your friends",value: 0, link: "/timeline"},
         {title: "Albums",subTitle: "Save or post your albums",value: 0, link: "/albums"},
         {title: "Favorites",subTitle: "Your favorite friends",value: 0, link: "/favorites"},
         {title: "Privacy Policy", subTitle: "Protect your privacy", value: 0, link: "/privacy"},
