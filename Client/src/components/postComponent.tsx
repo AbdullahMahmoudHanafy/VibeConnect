@@ -3,6 +3,7 @@ import { Heart, Share2, MessageCircle } from "lucide-react";
 import { likePost, sharePost } from "../services/social";
 import { useSelector } from "react-redux";
 import type { RootState } from "../store/store";
+import { useNavigate } from "react-router-dom";
 
 type User = {
   name: string;
@@ -33,6 +34,7 @@ export default function Post({
 }: PostProps) {
   const [following, setFollowing] = useState(isFollowing);
   const currUser = useSelector((state: RootState) => state.user.user);
+  const navigator = useNavigate();
 
   async function handleLike() {
     if (!currUser) return;
@@ -109,7 +111,7 @@ export default function Post({
                 <span className="text-sm">{likes_count}</span>
             </div>
             <div className="flex items-center gap-1 cursor-pointer hover:text-green-500">
-                <MessageCircle className="w-4 h-4" />
+                <MessageCircle className="w-4 h-4" onClick={() => navigator(`/post/${id}`)}/>
                 <span className="text-sm">{comments_count}</span>
             </div>
         </div>

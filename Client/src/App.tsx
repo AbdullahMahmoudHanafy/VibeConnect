@@ -8,6 +8,7 @@ import Profile from "./pages/Profile/Profile";
 import Chatting from "./pages/Chatting/Chatting";
 import Notifications from "./pages/Notifications/Notifications";
 import Timeline from "./pages/Timeline/Timeline";
+import PostDetails from "./pages/Post-Details/PostDetails";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <Route path="/profile/:userId" element={<Profile />} />
       <Route path="/chat/:userId" element={<Chatting />} />
       <Route path="/timeline" element={<Timeline />} />
+      <Route path="/post/:id" element={<PostDetails />} />
       <Route path="/notifications" element={<Notifications />} />
     </Routes>
   );
